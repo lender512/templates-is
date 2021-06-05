@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CallCenter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">practica</a> &gt; <a href="index.source.html" class="el_package">paquete</a> &gt; <span class="el_source">CallCenter.java</span></div><h1>CallCenter.java</h1><pre class="source lang-java linenums">package paquete;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.*;
+
+public class CallCenter {
+<span class="fc" id="L8">    private static final Logger logger = LoggerFactory.getLogger(CallCenter.class);</span>
+<span class="fc" id="L9">    List&lt;List&lt;CallWorker&gt;&gt; workers = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L10">    Queue&lt;Call&gt; calls = new LinkedList&lt;&gt;();</span>
+
+<span class="fc" id="L12">    private static CallCenter instance = null;</span>
+
+    public static CallCenter getInstance(){
+<span class="pc bpc" id="L15" title="1 of 2 branches missed.">        if (instance == null) {</span>
+<span class="fc" id="L16">            instance = new CallCenter();</span>
+        }
+<span class="fc" id="L18">        return instance;</span>
+    }
+
+<span class="fc" id="L21">    private CallCenter(){</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        for (var i = 0; i &lt; 3; i++) {</span>
+<span class="fc" id="L23">            workers.add(new ArrayList&lt;&gt;());</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">            for (var j = 0; j &lt; 10; j++) {</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">                if (i == 0)</span>
+<span class="fc" id="L26">                    workers.get(i).add(new Respondent(j));</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">                else if (i == 1)</span>
+<span class="fc" id="L28">                    workers.get(i).add(new Manager(j));</span>
+                else
+<span class="fc" id="L30">                    workers.get(i).add(new Director(j));</span>
+            }
+        }
+<span class="fc" id="L33">        workers.get(1).get(4).bussy = false;</span>
+<span class="fc" id="L34">    }</span>
+
+    public void answerCall() {
+<span class="fc" id="L37">        calls.remove();</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for (List&lt;CallWorker&gt; worker : workers) {</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">            for (CallWorker callWorker: worker) {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">                if (!callWorker.bussy) {</span>
+<span class="fc" id="L41">                    var id = callWorker.id;</span>
+<span class="fc" id="L42">                    var rango = callWorker.getClass().getSimpleName();</span>
+<span class="fc" id="L43">                    logger.info(&quot;HOLA from {} {}&quot;, rango, id);</span>
+                }
+<span class="fc" id="L45">            }</span>
+<span class="fc" id="L46">        }</span>
+<span class="fc" id="L47">    }</span>
+
+    public void receiveCall(){
+<span class="fc" id="L50">        var call = new Call();</span>
+<span class="fc" id="L51">        calls.add(call);</span>
+<span class="fc" id="L52">        answerCall();</span>
+<span class="fc" id="L53">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
